@@ -40,7 +40,7 @@ class QbeventsIndexer
         }
 
         $fields = '*';
-        $table = 'tx_qbevents_domain_model_eventdate, tx_qbevents_domain_model_event';
+        $table = 'tx_qbevents_domain_model_event, tx_qbevents_domain_model_eventdate';
 
         $whereParts = [
             'tx_qbevents_domain_model_eventdate.event = tx_qbevents_domain_model_event.uid',
