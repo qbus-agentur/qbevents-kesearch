@@ -1,0 +1,41 @@
+{
+    "name": "qbus/qbevents-kesearch",
+    "type": "typo3-cms-extension",
+    "description": "ke_search indexer for TYPO3 Event Management",
+    "keywords": [
+        "TYPO3",
+        "extension"
+    ],
+    "homepage": "https://www.qbus.de",
+    "support": {
+        "issues": "https://github.com/qbus-agentur/qbevents-kesearch/issues"
+    },
+    "authors": [
+        {
+            "name": "Benjamin Franzke",
+            "email": "bfr@qbus.de",
+            "role": "Developer",
+            "homepage": "https://www.qbus.de"
+        }
+    ],
+    "license": "GPL-2.0+",
+    "require": {
+        "typo3/cms-core": "^7.6.0|^8.0",
+        "qbus/qbevents": "^0.8.0",
+        "teaminmedias-pluswerk/ke_search": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Qbus\\QbeventsKesearch\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Qbus\\Qbevents\\": "Tests"
+        }
+    },
+    "replace": {
+        "qbevents_kesearch": "self.version",
+        "typo3-ter/qbevents_kesearch": "self.version"
+    }
+}
