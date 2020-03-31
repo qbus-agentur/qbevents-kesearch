@@ -91,10 +91,10 @@ class QbeventsIndexer
                 \tx_kesearch_helper::makeSystemCategoryTags($tags, $record['event'], 'tx_qbevents_domain_model_event');
 
                 $additionalFields = array(
-                    'sortdate' => $record['crdate'],
-                    'orig_uid' => $record['uid'],
-                    'orig_pid' => $record['pid'],
-                    'sortdate' => $record['datetime'],
+                    'sortdate' => (int)$record['crdate'],
+                    'orig_uid' => (int)$record['uid'],
+                    'orig_pid' => (int)$record['pid'],
+                    'sortdate' => (int)$record['datetime'],
                 );
 
                 // hook for custom modifications of the indexed data, e.g. the tags
