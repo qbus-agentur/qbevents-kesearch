@@ -1,6 +1,8 @@
 <?php
 namespace Qbus\QbeventsKesearch\Indexer\Types;
 
+use TeaminmediasPluswerk\KeSearch\Lib\SearchHelper;
+
 /**
  * QbeventsIndexer
  *
@@ -81,26 +83,25 @@ class QbeventsIndexer
                     $tags = $this->pageRecords[intval($record['pid'])]['tags'];
                 }
 
-                \tx_kesearch_helper::makeTags($tags, ['event']);
+                SearchHelper::makeTags($tags, ['event']);
 
                 // make tags from assigned categories
-                $categories = \tx_kesearch_helper::getCategories($record['event'], 'tx_qbevents_domain_model_event');
-                \tx_kesearch_helper::makeTags($tags, $categories['title_list']);
+                $categories = SearchHelper::getCategories($record['event'], 'tx_qbevents_domain_model_event');
+                SearchHelper::makeTags($tags, $categories['title_list']);
 
                 // assign categories as generic tags (eg. "syscat123")
-                \tx_kesearch_helper::makeSystemCategoryTags($tags, $record['event'], 'tx_qbevents_domain_model_event');
+                SearchHelper::makeSystemCategoryTags($tags, $record['event'], 'tx_qbevents_domain_model_event');
 
                 $additionalFields = array(
                     'sortdate' => (int)$record['crdate'],
                     'orig_uid' => (int)$record['uid'],
                     'orig_pid' => (int)$record['pid'],
-                    'sortdate' => (int)$record['datetime'],
                 );
 
                 // hook for custom modifications of the indexed data, e.g. the tags
                 if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['qbevents_kesearch']['modifyQbeventsIndexEntry'])) {
                     foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['qbevents_kesearch']['modifyQbeventsIndexEntry'] as $_classRef) {
-                        $_procObj = & \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj($_classRef);
+                        $_procObj = & \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($_classRef);
                         $_procObj->modifyQbeventsIndexEntry(
                             $title,
                             $fullContent,

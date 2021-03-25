@@ -4,7 +4,7 @@ if (!defined('TYPO3_MODE')) {
 }
 
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['registerIndexerConfiguration'][] =
-    Qbus\QbeventsKesearch\Indexer\Types\QbeventsIndexer::class;
+    \Qbus\QbeventsKesearch\Indexer\Types\QbeventsIndexer::class;
 
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['customIndexer'][] =
-    Qbus\QbeventsKesearch\Indexer\Types\QbeventsIndexer::class;
+    \Qbus\QbeventsKesearch\Indexer\Types\QbeventsIndexer::class;
