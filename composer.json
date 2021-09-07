@@ -21,7 +21,7 @@
     "license": "GPL-2.0+",
     "require": {
         "typo3/cms-core": "^9.5 || ^10.4",
-        "qbus/qbevents": "^0.8.0 || ^0.9.0 || ^0.10.0",
+        "qbus/qbevents": "^0.11.0",
         "teaminmedias-pluswerk/ke_search": "^3.6"
     },
     "autoload": {
@@ -34,8 +34,12 @@
             "Qbus\\Qbevents\\": "Tests"
         }
     },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "qbevents_kesearch"
+        }
+    },
     "replace": {
-        "qbevents_kesearch": "self.version",
         "typo3-ter/qbevents_kesearch": "self.version"
     }
 }

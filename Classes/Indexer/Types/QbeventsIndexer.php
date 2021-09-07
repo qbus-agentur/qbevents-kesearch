@@ -2,6 +2,8 @@
 namespace Qbus\QbeventsKesearch\Indexer\Types;
 
 use TeaminmediasPluswerk\KeSearch\Lib\SearchHelper;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * QbeventsIndexer
@@ -41,27 +43,31 @@ class QbeventsIndexer
             return '';
         }
 
-        $fields = '*';
-        $table = 'tx_qbevents_domain_model_event, tx_qbevents_domain_model_eventdate';
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('tx_qbevents_domain_model_event');
 
-        $whereParts = [
-            'tx_qbevents_domain_model_eventdate.event = tx_qbevents_domain_model_event.uid',
-            'tx_qbevents_domain_model_eventdate.pid IN (' . $indexerConfig['sysfolder'] . ')',
-            'tx_qbevents_domain_model_eventdate.hidden = 0',
-            'tx_qbevents_domain_model_eventdate.deleted = 0',
-            'tx_qbevents_domain_model_eventdate.start >= UNIX_TIMESTAMP(NOW())',
-        ];
+        $res = $queryBuilder
+            ->select('*')
+            ->from('tx_qbevents_domain_model_eventdate', 'date')
+            ->join(
+                'date',
+                'tx_qbevents_domain_model_event',
+                'event',
+                $queryBuilder->expr()->eq('date.event', $queryBuilder->quoteIdentifier('event.uid'))
+            )
+            ->where(...[
+                $queryBuilder->expr()->in('date.pid', GeneralUtility::trimExplode(',', $indexerConfig['sysfolder'], true)),
+                //'tx_qbevents_domain_model_eventdate.start >= UNIX_TIMESTAMP(NOW())',
+                $queryBuilder->expr()->comparison($queryBuilder->quoteIdentifier('date.start'), '>=', time()),
+            ])
+            ->orderBy('date.start', 'ASC')
+            ->execute();
 
-        $where = implode(' AND ', $whereParts);
 
-        $groupBy = '';
-        $orderBy = 'tx_qbevents_domain_model_eventdate.start ASC';
-        $limit = '';
-        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, $where, $groupBy, $orderBy, $limit);
-        $count = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+        $count = $res->rowCount();
 
         if ($count) {
-            while ($record = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+            while (($record = $res->fetch())) {
                 /* Compile the information which should go into the index
                    the field names depend on the table you want to index. */
                 $title = strip_tags($record['title']);
@@ -101,7 +107,7 @@ class QbeventsIndexer
                 // hook for custom modifications of the indexed data, e.g. the tags
                 if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['qbevents_kesearch']['modifyQbeventsIndexEntry'])) {
                     foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['qbevents_kesearch']['modifyQbeventsIndexEntry'] as $_classRef) {
-                        $_procObj = & \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($_classRef);
+                        $_procObj = & GeneralUtility::makeInstance($_classRef);
                         $_procObj->modifyQbeventsIndexEntry(
                             $title,
                             $fullContent,
