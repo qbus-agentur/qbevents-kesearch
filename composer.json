@@ -20,9 +20,9 @@
     ],
     "license": "GPL-2.0+",
     "require": {
-        "typo3/cms-core": "^7.6.0|^8.0",
-        "qbus/qbevents": "^0.8.0 || ^0.9.0 || ^0.10.0",
-        "teaminmedias-pluswerk/ke_search": "^2.4"
+        "typo3/cms-core": "^10.4",
+        "qbus/qbevents": "^0.11.0 || dev-typo3-v10",
+        "teaminmedias-pluswerk/ke_search": "^3.0"
     },
     "autoload": {
         "psr-4": {
@@ -34,8 +34,12 @@
             "Qbus\\Qbevents\\": "Tests"
         }
     },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "qbevents_kesearch"
+        }
+    },
     "replace": {
-        "qbevents_kesearch": "self.version",
         "typo3-ter/qbevents_kesearch": "self.version"
     }
 }

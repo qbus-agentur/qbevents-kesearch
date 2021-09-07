@@ -1,6 +1,7 @@
 <?php
 namespace Qbus\QbeventsKesearch\Indexer\Types;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * QbeventsIndexer
  *
@@ -100,7 +101,7 @@ class QbeventsIndexer
                 // hook for custom modifications of the indexed data, e.g. the tags
                 if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['qbevents_kesearch']['modifyQbeventsIndexEntry'])) {
                     foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['qbevents_kesearch']['modifyQbeventsIndexEntry'] as $_classRef) {
-                        $_procObj = & \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj($_classRef);
+                        $_procObj = & GeneralUtility::makeInstance($_classRef);
                         $_procObj->modifyQbeventsIndexEntry(
                             $title,
                             $fullContent,

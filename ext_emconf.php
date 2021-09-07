@@ -7,16 +7,12 @@ $EM_CONF[$_EXTKEY] = array(
     'author' => 'Benjamin Franzke',
     'author_email' => 'bfr@qbus.de',
     'state' => 'stable',
-    'internal' => '',
-    'uploadfolder' => '0',
-    'createDirs' => '',
-    'clearCacheOnLoad' => 0,
-    'version' => '1.0.3',
+    'version' => '1.1.0',
     'constraints' => array(
         'depends' => array(
-            'typo3' => '6.2.0-7.6.99',
-            'qbevents' => '0.8.0',
-            'ke_search' => '2.4.0',
+            'typo3' => '10.4.0-10.4.99',
+            'qbevents' => '0.11.0',
+            'ke_search' => '3.0.0',
         ),
         'conflicts' => array(
         ),
