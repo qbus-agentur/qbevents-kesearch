@@ -1,7 +1,7 @@
 <?php
 namespace Qbus\QbeventsKesearch\Indexer\Types;
 
-use TeaminmediasPluswerk\KeSearch\Lib\SearchHelper;
+use Tpwd\KeSearch\Lib\SearchHelper;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
