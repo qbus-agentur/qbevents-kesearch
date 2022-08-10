@@ -21,7 +21,7 @@
     "license": "GPL-2.0+",
     "require": {
         "typo3/cms-core": "^9.5 || ^10.4 || ^11.5",
-        "qbus/qbevents": "^0.11.0 || ^0.12.0",
+        "qbus/qbevents": "^0.11.0 || ^0.12.0 || ^0.20.0",
         "tpwd/ke_search": "^4.0"
     },
     "autoload": {
