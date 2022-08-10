@@ -10,7 +10,7 @@ $EM_CONF[$_EXTKEY] = array(
     'version' => '2.0.1',
     'constraints' => array(
         'depends' => array(
-            'typo3' => '9.5.0-10.4.99',
+            'typo3' => '9.5.0-11.5.99',
             'qbevents' => '0.11.0',
             'ke_search' => '4.0.0',
         ),
